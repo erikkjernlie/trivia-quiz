@@ -15,17 +15,24 @@ const fetcher = (url: string): Promise<Question[]> =>
       }))
     );
 
+const API_URL = "api/questions?limit=1";
+
 const Home: NextPage = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>(
     undefined
   );
-  const { data, error } = useSWR<Question[]>("api/questions?limit=1", fetcher);
+  const { data, error } = useSWR<Question[]>(API_URL, fetcher);
   const { mutate } = useSWRConfig();
 
   const onClickAnswer = async (answer: string) => {
     setSelectedAnswer(answer);
+    setTimeout(() => {
+      // Reset the answer after 600ms and fetch a new question for continued learning
+      mutate(API_URL, fetcher);
+      setSelectedAnswer(undefined);
+    }, 600);
   };
-  if (error) return <h1>🤒</h1>;
+  if (error && !data) return <h1>🤒</h1>;
   if (!data || data.length !== 1) return <h1>⏳</h1>;
   return (
     <div className={styles.container}>
