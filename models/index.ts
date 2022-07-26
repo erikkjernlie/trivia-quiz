@@ -3,3 +3,7 @@ export type TriviaQuestion = {
   incorrectAnswers: string[];
   correctAnswer: string;
 };
+
+export type Question = TriviaQuestion & {
+  allAnswers: string[];
+};
