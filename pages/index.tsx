@@ -37,10 +37,9 @@ const Home: NextPage = () => {
               <p
                 key={answer}
                 className={
-                  answer === selectedAnswer && answer === question.correctAnswer
+                  selectedAnswer && answer === question.correctAnswer
                     ? styles["answer--correct"]
-                    : answer === selectedAnswer &&
-                      answer !== question.correctAnswer
+                    : answer === selectedAnswer
                     ? styles["answer--incorrect"]
                     : styles.option
                 }
